@@ -75,7 +75,6 @@ var slide = new auiSlide({
     getList();
 
 
-
   }
 
   function getList(){
@@ -122,94 +121,111 @@ var slide = new auiSlide({
     return;
 
   }
+function openVipurl(url) {
+    var time = localStorage.getItem('user_time');
+    var user_id = localStorage.getItem('user_id');
+    var username = localStorage.getItem('user_name');
+    var timestamp = Date.parse(new Date()) / 1000;
+    if (user_id < 1) {
+        api.alert({
+            title: '温馨提示',
+            msg: '请先登陆后使用',
+        });
+        api.openWin({
+            name: 'login',
+            url: 'login.html',
+            delay: 300
+        });
+        return;
 
-  if (time>timestamp) {
-
-    setTimeout("playRadio();",1000);
-    var delay = 0;
-    if(api.systemType != 'ios'){
-        delay = 300;
     }
-    api.openWin({
-        name: 'v_list_win_win',
-        url: 'v_list_win_win.html',
-        delay: 800,
-        pageParam:{url:url},
-        bgColor: 'rgba(0,0,0,0)'
-    });
+    if (time > timestamp) {
 
-  }else if (time == -1) {
+        setTimeout("playRadio();", 1000);
+        var delay = 0;
+        if (api.systemType != 'ios') {
+            delay = 300;
+        }
+        api.openWin({
+            name: 'v_list_win_win',
+            url: 'v_list_win_win.html',
+            delay: 800,
+            pageParam: {url: url},
+            bgColor: 'rgba(0,0,0,0)'
+        });
 
-    setTimeout("playRadio();",2000);
-    var delay = 0;
-    if(api.systemType != 'ios'){
-        delay = 300;
-    }
-    api.openWin({
-        name: 'v_list_win',
-        url: 'v_list_win.html',
-        delay: 800,
-        pageParam:{url:url},
-        bgColor: '#000000'
-    });
+    } else if (time == -1) {
+
+        setTimeout("playRadio();", 2000);
+        var delay = 0;
+        if (api.systemType != 'ios') {
+            delay = 300;
+        }
+        api.openWin({
+            name: 'v_list_win',
+            url: 'v_list_win.html',
+            delay: 800,
+            pageParam: {url: url},
+            bgColor: '#000000'
+        });
 
 
-  }else if (time<timestamp){
-    var dialogBox = api.require('dialogBox');
-    dialogBox.alert({
-        texts: {
-            content: '您的VIP会员已过期，请及时续费！',
-            leftBtnTitle: '在想想',
-            rightBtnTitle: '去开通'
-        },
-        styles: {
-            bg: '#fff',
-            w: 300,
-            content: {
-                color: '#000',
-                size: 14
+    } else if (time < timestamp) {
+        var dialogBox = api.require('dialogBox');
+        dialogBox.alert({
+            texts: {
+                content: '您的VIP会员已过期，请及时续费！',
+                leftBtnTitle: '在想想',
+                rightBtnTitle: '去开通'
             },
-            left: {
-                marginB: 7,
-                marginL: 20,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#ff7600',
-                color: '#fff',
-                size: 14
-            },
-            right: {
-                marginB: 7,
-                marginL: 10,
-                w: 130,
-                h: 35,
-                corner: 2,
-                bg: '#ff7600',
-                color: '#fff',
-                size: 14
+            styles: {
+                bg: '#fff',
+                w: 300,
+                content: {
+                    color: '#000',
+                    size: 14
+                },
+                left: {
+                    marginB: 7,
+                    marginL: 20,
+                    w: 130,
+                    h: 35,
+                    corner: 2,
+                    bg: '#ff7600',
+                    color: '#fff',
+                    size: 14
+                },
+                right: {
+                    marginB: 7,
+                    marginL: 10,
+                    w: 130,
+                    h: 35,
+                    corner: 2,
+                    bg: '#ff7600',
+                    color: '#fff',
+                    size: 14
+                }
             }
-        }
-    }, function(ret) {
-        if (ret.eventType == 'left') {
-            var dialogBox = api.require('dialogBox');
-            dialogBox.close({
-                dialogName: 'alert'
-            });
-        }else if (ret.eventType == 'right') {
-          api.openWin({
-              name: 'open_vip_win',
-              url: 'open_vip_win.html',
-              delay: 300
-          });
-          var dialogBox = api.require('dialogBox');
-          dialogBox.close({
-              dialogName: 'alert'
-          });
-        }
-    });
-  }
-
+        }, function (ret) {
+            if (ret.eventType == 'left') {
+                var dialogBox = api.require('dialogBox');
+                dialogBox.close({
+                    dialogName: 'alert'
+                });
+            } else if (ret.eventType == 'right') {
+                api.openWin({
+                    name: 'open_vip_win',
+                    url: 'open_vip_win.html',
+                    delay: 300
+                });
+                var dialogBox = api.require('dialogBox');
+                dialogBox.close({
+                    dialogName: 'alert'
+                });
+            }
+        });
+    }
+}
 
 
 
